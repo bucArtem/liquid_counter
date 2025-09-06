@@ -18,15 +18,16 @@
         <div class = 'nav-items'>
            <div class = 'item'>
                 <img class ='icon-item' src="fi-rs-raindrops.svg">
-                <p class = 'text-item'>Трекер</p>
+                <a class = 'text-item'>Трекер</a>
            </div>
            <div class = 'item'>
                 <img class ='icon-item' src="fi-rs-stats.svg">
-                <p class = 'text-item'>Статистика</p>
+                <a class = 'text-item'>Статистика</a>
            </div>
            <div class = 'item'>
                 <img class ='icon-item' src="fi-rs-settings.svg">
-                <p class = 'text-item'>Налаштування</p>
+                <a class = 'text-item'>Налаштування</a>
+                
            </div>
 
 
@@ -37,7 +38,13 @@
     
     <main>
 
-        <div class="water-meter"></div>
+        <div class="water-meter">
+            <div class="circle">   
+                <div class="water-level" id="waterLevel"></div>
+                <div class="water-text" id="waterText">0 мл</div>
+                <div class="water-goal">із 2000 мл</div>
+                <div class="water-percentage">0%</div>
+        </div>
         
     </main>
 </body>

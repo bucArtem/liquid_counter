@@ -81,6 +81,7 @@ body {
   color: #fff;
 }
 
+
 /* === ОСНОВНИЙ КОНТЕНТ === */
 main {
   margin-top: 100px;
@@ -107,4 +108,59 @@ main {
   background: #ffffff;
   border-radius: 40px;
   color: #000;
+}
+
+.item:hover{
+
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius:10px;
+  background-color: #179cc9;
+  border:1px solid #000;
+
+
+
+}
+
+.circle {
+  width: 65%; 
+  height: 50%; 
+  background-color: white;
+  border-radius: 50%; 
+  border: 4px solid #00EAFF;
+
+  display: flex;              /* центруємо через flexbox */
+  align-items: center;        /* по вертикалі */
+  justify-content: center;    /* по горизонталі */
+  position: relative;
+  overflow: hidden;           /* щоб вода не виходила */
+}
+
+.water-text {
+  position: relative; 
+  z-index: 2;                 /* поверх води */
+  font-size: 25px;
+  font-weight: bold;
+  color: #000;
+  text-align: center;
+  margin-bottom:60px ;
+  
+}
+
+.water-goal {
+  position: absolute; 
+  margin-bottom: 9px; 
+  width: 100%; 
+  text-align: center; 
+  font-size: 13px; 
+  color: #179cc9; 
+}
+
+.water-percentage {
+  position: absolute; 
+  margin-top: 50px; 
+  width: 100%; 
+  text-align: center; 
+  font-size: 13px; 
+  color: #179cc9; 
 }
