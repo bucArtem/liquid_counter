@@ -83,11 +83,12 @@ body {
 
 
 /* === ОСНОВНИЙ КОНТЕНТ === */
-main {
+.core {
   margin-top: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   padding: 0 2rem;
 }
 
@@ -156,6 +157,15 @@ main {
   color: #179cc9; 
 }
 
+
+main{
+
+  
+  gap:30px;
+
+
+}
+
 .water-percentage {
   position: absolute; 
   margin-top: 50px; 
@@ -163,4 +173,118 @@ main {
   text-align: center; 
   font-size: 13px; 
   color: #179cc9; 
+}
+
+.counter{
+
+  margin-top: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  background-color: #88dbe4;
+  color:#12627c;
+  
+  
+  font-size:10px;
+  padding:10px;
+
+
+}
+
+.water-plus{
+  padding: 40px;
+  margin-top: 100px;
+
+background-color: white;
+color:#0e3c91;
+
+display: flex;
+align-items: center;
+justify-content: start;
+flex-direction: start;
+flex-direction: column;
+border-radius:10px;
+gap:20px;
+width: 100%;
+max-width: 500px;
+
+
+}
+
+.add-water{
+
+
+display: flex;
+justify-content: row;
+flex-direction: start;
+align-items: center;
+
+  
+}
+
+.text-add{
+
+color:#0e3c91;
+font-size: 10px;
+
+
+}
+
+.plus{
+  color:#0e3c91;
+}
+
+
+.water-plus-items{
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around center;
+  gap: 20px;
+
+
+}
+
+.water-plus-item{
+
+
+  background-color: #cce7f7;
+  border: 1px solid rgb(106, 186, 240);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap:10px;
+
+  padding: 10px;
+  padding-left: 50px;
+  padding-right: 50px;
+
+  border-radius: 10px;
+
+
+
+
+}
+
+.drop{
+
+
+width: 25px;
+height: 25px;
+border-color: #0e3c91;
+color:#0e3c91;
+
+}
+
+.ml{
+
+
+color: #12627c;
+font-size: 20px;
+
+
 }
