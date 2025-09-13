@@ -164,3 +164,21 @@ main {
   font-size: 13px; 
   color: #179cc9; 
 }
+
+.counter{
+
+  margin-top: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+  background-color: #88dbe4;
+  color:#12627c;
+  
+  
+  font-size:10px;
+  padding:10px;
+
+
+}
