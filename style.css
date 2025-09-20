@@ -19,7 +19,7 @@ body {
   align-items: center;
 
   width: 100%;
-  min-height: 120px;
+  min-height: 120x;
   padding: 20px 40px;
 
   background: #63C6EA;
@@ -288,3 +288,69 @@ font-size: 20px;
 
 
 }
+
+.korusni-poradu-text{
+  font-size: 20px;
+  font-weight: 900;
+  font-size: 45px;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+ position: absolute;
+  
+  color:#179cc9
+  
+  }
+
+  .korusni-poradu{
+/* Property 1=Default */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 34px 61px;
+gap: 10px;
+isolation: isolate;
+
+position: absolute;
+width: 500px;
+height:500px;
+left: 20px;
+top: 20px;
+
+background: #FFFFFF;
+border-radius: 45px;
+
+    }
+
+
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px; /* відстань між блоками */
+      padding: 40px 20px;
+    }
+    
+    /* Щоб поради стали частиною одного лейаута */
+    .korusni-poradu {
+      position: relative; /* прибрав absolute */
+      width: 100%;
+      max-width: 500px;
+      padding: 30px;
+      background: #fff;
+      border-radius: 20px;
+      color: #12627c;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .korusni-poradu-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: #179cc9;
+    }
+    
