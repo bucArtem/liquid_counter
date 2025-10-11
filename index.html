@@ -13,16 +13,16 @@
                 <img class="calendar-icon" src="fi-rs-calendar.svg">
                 <p class = 'date-date'>Сьогодні</p>
             </div>
-            <p class="datee">суботу, 23 серпня 2025 р.</p>
+            <p class="datee"></p>
         </div>
         <div class = 'nav-items'>
             <div class = 'item'>
                 <img class ='icon-item' src="fi-rs-raindrops.svg">
-                <a class = 'text-item'>Трекер</a>
+                <a href="#tracker-section" class = 'text-item'>Трекер</a>
             </div>
             <div class = 'item'>
                 <img class ='icon-item' src="fi-rs-stats.svg">
-                <a class = 'text-item'>Статистика</a>
+                <a href="#stats-section" class = 'text-item'>Статистика</a>
             </div>
             <div class = 'item' id="settingsBtn">
                 <img class ='icon-item' src="fi-rs-settings.svg">
@@ -30,7 +30,8 @@
             </div>
         </div>
     </div>
-    <main>
+
+    <main id="tracker-section">
         <div class="core">
             <div class="water-meter">
                 <div class="circle">
@@ -71,7 +72,8 @@
                     </div>
                 </div>
             </div>
-            <div id="weeklyStats" class="weekly-stats">
+
+            <div id="stats-section" class="weekly-stats">
                 <h2>Статистика за тиждень</h2>
                 <canvas id="weeklyChart" width="400" height="200"></canvas>
             </div>
@@ -89,6 +91,8 @@
             <button id="saveGoalBtn">Зберегти</button>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <script src="script.js"></script>
+   
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

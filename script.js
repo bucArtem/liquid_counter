@@ -1,31 +1,56 @@
-// ===== GLOBAL VARIABLES & DOM ELEMENTS =====
 const settingsModal = document.getElementById('settingsModal');
 const settingsBtn = document.getElementById('settingsBtn');
 const closeBtn = document.querySelector('.close-btn');
 const saveGoalBtn = document.getElementById('saveGoalBtn');
 const goalInput = document.getElementById('goalInput');
-let chartInstance = null; // To hold the chart instance
+let chartInstance = null; 
 
-// Load goal from localStorage or set a default value
 let goal = parseInt(localStorage.getItem('waterGoal')) || 2000;
 let current = 0;
 
-// ===== DATA HANDLING =====
 let weeklyStats = JSON.parse(localStorage.getItem("weeklyStats") || "{}");
-let today = new Date().toISOString().slice(0, 10); // Get today's date in YYYY-MM-DD format
+let today = new Date().toISOString().slice(0, 10); 
 
-// Initialize today's data if it doesn't exist
 if (!weeklyStats[today]) {
     weeklyStats[today] = 0;
 }
 current = weeklyStats[today];
 
-// ===== UI UPDATES =====
 
-/**
- * Animates the water level in the main circle.
- * @param {number} percent - The percentage to fill.
- */
+function animateValue(element, start, end, duration, suffix = '') {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const currentValue = Math.floor(progress * (end - start) + start);
+        element.textContent = `${currentValue}${suffix}`;
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
+
+function updateDate() {
+    const dateElement = document.querySelector('.datee');
+    if (!dateElement) return;
+
+    const now = new Date();
+    const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    };
+    
+    let formattedDate = now.toLocaleDateString('uk-UA', options);
+    
+    formattedDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+    
+    dateElement.textContent = formattedDate;
+}
+
+
 function animateWaterLevel(percent) {
     const waterLevel = document.getElementById('waterLevel');
     if (!waterLevel) return;
@@ -34,15 +59,17 @@ function animateWaterLevel(percent) {
     waterLevel.style.height = `${fillPercent}%`;
 }
 
-/**
- * Updates all relevant parts of the UI with current data.
- */
-function updateUI() {
-    document.getElementById('waterText').textContent = `${current} мл`;
-    document.getElementById('waterGoalText').textContent = `із ${goal} мл`; // Update goal text
-    const remaining = goal - current;
-    document.querySelector('.counter').textContent = `Залишилося ${remaining > 0 ? remaining : 0} мл`;
+function updateUI(oldCurrent = 0) {
+    const waterTextEl = document.getElementById('waterText');
+    const counterEl = document.querySelector('.counter');
+    const oldRemaining = goal - oldCurrent > 0 ? goal - oldCurrent : 0;
+    const newRemaining = goal - current > 0 ? goal - current : 0;
 
+    animateValue(waterTextEl, oldCurrent, current, 500, ' мл');
+    animateValue(counterEl, oldRemaining, newRemaining, 500, ' мл залишилося');
+
+
+    document.getElementById('waterGoalText').textContent = `із ${goal} мл`;
     let percent = Math.round((current / goal) * 100);
     document.querySelector('.water-percentage').textContent = `${percent}%`;
 
@@ -50,32 +77,21 @@ function updateUI() {
     updateWeeklyChart();
 }
 
-// ===== DATA PERSISTENCE =====
 
-/**
- * Saves the weekly statistics to localStorage.
- */
 function saveStats() {
     weeklyStats[today] = current;
     localStorage.setItem("weeklyStats", JSON.stringify(weeklyStats));
 }
 
-// ===== CORE LOGIC =====
 
-/**
- * Adds a specified amount of water to the current total.
- * @param {number} amount - The amount of water to add in ml.
- */
 function addWater(amount) {
+    const oldCurrent = current; 
     current += amount;
-    // Don't cap at goal to allow for over-achieving, but chart will cap visually
     saveStats();
-    updateUI();
+    updateUI(oldCurrent); 
 }
 
-// ===== EVENT LISTENERS =====
 
-// Add water buttons
 document.querySelectorAll('.water-plus-item').forEach(item => {
     item.addEventListener('click', function() {
         const amount = parseInt(this.dataset.amount);
@@ -85,9 +101,8 @@ document.querySelectorAll('.water-plus-item').forEach(item => {
     });
 });
 
-// Settings Modal Listeners
 settingsBtn.addEventListener('click', () => {
-    goalInput.value = goal; // Show current goal in input
+    goalInput.value = goal;
     settingsModal.style.display = 'flex';
 });
 
@@ -104,9 +119,10 @@ window.addEventListener('click', (event) => {
 saveGoalBtn.addEventListener('click', () => {
     const newGoal = parseInt(goalInput.value);
     if (newGoal && newGoal > 0) {
+        const oldCurrent = current;
         goal = newGoal;
-        localStorage.setItem('waterGoal', goal); // Save the new goal
-        updateUI(); // Re-render the UI with the new goal
+        localStorage.setItem('waterGoal', goal);
+        updateUI(oldCurrent); 
         settingsModal.style.display = 'none';
     } else {
         alert("Будь ласка, введіть коректне число.");
@@ -114,22 +130,18 @@ saveGoalBtn.addEventListener('click', () => {
 });
 
 
-// ===== CHART LOGIC =====
 
-/**
- * Draws or updates the weekly statistics chart.
- */
 function updateWeeklyChart() {
     const canvas = document.getElementById("weeklyChart");
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
-    const days = Object.keys(weeklyStats).slice(-7); // Get last 7 days
+    const days = Object.keys(weeklyStats).slice(-7);
     const values = days.map(day => weeklyStats[day]);
-    const labels = days.map(day => day.slice(5)); // Format date as "MM-DD"
+    const labels = days.map(day => day.slice(5));
 
     if (chartInstance) {
-        chartInstance.destroy(); // Destroy old chart before creating a new one
+        chartInstance.destroy();
     }
 
     chartInstance = new Chart(ctx, {
@@ -146,6 +158,10 @@ function updateWeeklyChart() {
             }]
         },
         options: {
+            animation: {
+                duration: 1000,
+                easing: 'easeInOutQuart'
+            },
             scales: {
                 y: {
                     beginAtZero: true,
@@ -173,5 +189,13 @@ function updateWeeklyChart() {
 }
 
 
-// ===== INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', updateUI);
+document.addEventListener('DOMContentLoaded', () => {
+    updateDate(); 
+
+    const initialCurrent = current;
+    document.getElementById('waterText').textContent = `${initialCurrent} мл`;
+    const remaining = goal - initialCurrent > 0 ? goal - initialCurrent : 0;
+    document.querySelector('.counter').textContent = `Залишилося ${remaining} мл`;
+    
+    updateUI(initialCurrent);
+});
